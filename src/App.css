@@ -1,0 +1,272 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 24px;
+  border-bottom: 1px solid #262b33;
+  background: #14181f;
+}
+
+.brand {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-right: auto;
+}
+
+.nav {
+  display: flex;
+  gap: 16px;
+}
+
+.nav a {
+  color: #9aa4b2;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.92rem;
+}
+
+.nav a.active {
+  color: #e8eaed;
+  background: #232936;
+}
+
+.settings-toggle {
+  background: transparent;
+  border: 1px solid #333a45;
+  color: #cfd6e0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.settings-panel {
+  background: #171b22;
+  border-bottom: 1px solid #262b33;
+  padding: 16px 24px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 320px;
+  flex: 1;
+}
+
+.field label {
+  font-size: 0.82rem;
+  color: #cfd6e0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hint {
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: #7a8494;
+}
+
+.field input {
+  background: #0f1216;
+  border: 1px solid #333a45;
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #e8eaed;
+  font-size: 0.88rem;
+}
+
+.settings-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.settings-actions button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #333a45;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.settings-actions button:not(.secondary) {
+  background: #3d7eff;
+  border-color: #3d7eff;
+  color: white;
+}
+
+.settings-actions .secondary {
+  background: transparent;
+  color: #cfd6e0;
+}
+
+.content {
+  flex: 1;
+  padding: 24px;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.page h2 {
+  margin-bottom: 4px;
+}
+
+.page-intro {
+  color: #9aa4b2;
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+  max-width: 700px;
+}
+
+.bug-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bug-card {
+  border: 1px solid #262b33;
+  border-radius: 10px;
+  background: #14181f;
+  overflow: hidden;
+}
+
+.bug-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  cursor: pointer;
+}
+
+.bug-card-header h3 {
+  margin: 0 0 4px 0;
+  font-size: 0.98rem;
+}
+
+.bug-desc {
+  margin: 0;
+  color: #9aa4b2;
+  font-size: 0.85rem;
+}
+
+.trigger-btn {
+  flex-shrink: 0;
+  background: #3d7eff;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.trigger-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.pr-link {
+  background: #2d3542;
+}
+
+.bug-card-body {
+  border-top: 1px solid #262b33;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.curl-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.curl-label {
+  font-size: 0.75rem;
+  color: #7a8494;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.curl-line pre,
+.run-log-entry pre,
+.explanation-text {
+  background: #0b0e12;
+  border: 1px solid #262b33;
+  border-radius: 6px;
+  padding: 10px 12px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 4px 0 0 0;
+}
+
+.run-log {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.run-log-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.run-log-entry.ok .run-log-label {
+  color: #6fd08c;
+}
+
+.run-log-entry.fail .run-log-label {
+  color: #e07b7b;
+}
+
+.explanation-meta {
+  display: flex;
+  gap: 8px;
+}
+
+.tag {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #232936;
+  color: #cfd6e0;
+}
+
+.tag.muted {
+  color: #7a8494;
+}
+
+.empty-state {
+  color: #9aa4b2;
+  border: 1px dashed #333a45;
+  border-radius: 10px;
+  padding: 24px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.empty-state.error {
+  color: #e07b7b;
+  border-color: #4a2c2c;
+}
