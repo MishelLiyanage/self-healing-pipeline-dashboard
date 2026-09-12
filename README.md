@@ -9,7 +9,8 @@ website — see `infra/deploy.ps1`. Two views:
   from the browser. Triggering one produces a genuine uncaught exception that the
   self-healing pipeline picks up on its own (detection → diagnosis → repair → PR).
 - **PR Explanations** (`/explanations`) — reviewer-facing explanations the pipeline
-  publishes when it opens a repair PR.
+  publishes when it opens a repair PR. A PR body links straight to its own episode via
+  `/explanations?episode=<episode_id>`, which auto-expands and scrolls to that card.
 
 Both target-app's URL (its EKS LoadBalancer hostname, which changes every time the
 cluster is recreated) and this dashboard's own published-data URL are set at runtime
@@ -49,10 +50,12 @@ pipeline episode:
 ]
 ```
 
-This file is expected to live in this app's own S3 bucket, published by
-`self-healing-pipeline`'s `agents/agent_service/trust_experiment.py` /
-`pr_agent.py` whenever a repair PR opens or an episode's snapshot changes — that
-publish step is a separate, not-yet-done change in the `self-healing-pipeline` repo.
+This file lives in this app's own S3 bucket, published by `self-healing-pipeline`'s
+`agents/agent_service/trust_experiment.py` (`publish_episode()`) whenever `pr_agent.py`
+opens a repair PR — it upserts by `episode_id`, so re-running an episode replaces its
+old entry rather than duplicating it. Needs `DASHBOARD_S3_BUCKET`/`DASHBOARD_REGION` set
+in `self-healing-pipeline`'s `agents/.env` (this repo's `infra/deploy.ps1` prints the
+values to use once run).
 
 ## Related repo
 

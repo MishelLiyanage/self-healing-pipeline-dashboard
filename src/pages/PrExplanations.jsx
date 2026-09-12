@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { getDataUrl } from "../lib/settings";
 
-function EpisodeCard({ episode }) {
-  const [expanded, setExpanded] = useState(false);
+function EpisodeCard({ episode, autoExpand, cardRef }) {
+  const [expanded, setExpanded] = useState(autoExpand);
   return (
-    <div className="bug-card">
+    <div className="bug-card" ref={cardRef}>
       <div className="bug-card-header" onClick={() => setExpanded((v) => !v)}>
         <div>
           <h3>{episode.bug_label || episode.episode_id}</h3>
@@ -44,6 +45,13 @@ function EpisodeCard({ episode }) {
 export default function PrExplanations() {
   const [state, setState] = useState({ status: "idle", episodes: [], error: null });
   const dataUrl = getDataUrl();
+  const [searchParams] = useSearchParams();
+  // A PR body links here with ?episode=<id> (see pr_agent.py / trust_experiment.py) so
+  // the reviewer lands straight on the right episode, expanded and scrolled into view,
+  // instead of having to find it in the list themselves.
+  const targetEpisodeId = searchParams.get("episode");
+  const targetRef = useRef(null);
+  const scrolledRef = useRef(false);
 
   useEffect(() => {
     if (!dataUrl) {
@@ -59,6 +67,13 @@ export default function PrExplanations() {
       .then((episodes) => setState({ status: "loaded", episodes, error: null }))
       .catch((err) => setState({ status: "error", episodes: [], error: err.message }));
   }, [dataUrl]);
+
+  useEffect(() => {
+    if (!scrolledRef.current && targetEpisodeId && targetRef.current) {
+      targetRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrolledRef.current = true;
+    }
+  }, [state.status, targetEpisodeId]);
 
   return (
     <div className="page">
@@ -86,9 +101,17 @@ export default function PrExplanations() {
       )}
       {state.status === "loaded" && state.episodes.length > 0 && (
         <div className="bug-list">
-          {state.episodes.map((ep) => (
-            <EpisodeCard key={ep.episode_id} episode={ep} />
-          ))}
+          {state.episodes.map((ep) => {
+            const isTarget = targetEpisodeId && ep.episode_id === targetEpisodeId;
+            return (
+              <EpisodeCard
+                key={ep.episode_id}
+                episode={ep}
+                autoExpand={isTarget}
+                cardRef={isTarget ? targetRef : null}
+              />
+            );
+          })}
         </div>
       )}
     </div>
