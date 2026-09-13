@@ -96,9 +96,12 @@ export default function ExceptionsTrigger() {
       <p className="page-intro">
         Each of the 5 seeded bugs below can be fired directly at target-app from here.
         Triggering one produces a genuine uncaught exception, which the self-healing
-        pipeline picks up on its own (detection → diagnosis → repair → PR) — nothing else
-        to do after clicking Trigger. Check the PR Explanations tab shortly after for the
-        result.
+        pipeline picks up on its own (detection → classification → diagnosis → repair →
+        validation → PR) — nothing else to do after clicking Trigger. This takes a few
+        minutes end to end (the pipeline runs real LLM calls and Gradle builds, not
+        instant), and needs the live-consumer process running — see RUNBOOK.md's
+        "Live pipeline" section if nothing shows up. Check the PR Explanations tab after a
+        few minutes for the result.
       </p>
       <div className="bug-list">
         {BUGS.map((bug) => (
